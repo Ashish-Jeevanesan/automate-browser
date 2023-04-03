@@ -31,10 +31,11 @@ class BrowserAutomation:
         self.driver.get(self.jira_login_url)
         self.driver.execute_script(f"window.open('{self.urls[0]}','_blank');")
         self.driver.execute_script(f"window.open('{self.urls[1]}','_blank');")
-        self.driver.switch_to.window(self.driver.window_handles[0])
+        
 
         # Login to Jira
         # self.driver.get(self.jira_login_url)
+        self.driver.switch_to.window(self.driver.window_handles[0])
         if 'login.jsp' in self.driver.current_url:
             username_input = self.driver.find_element("id","login-form-username")
             password_input = self.driver.find_element("id","login-form-password")
@@ -42,6 +43,8 @@ class BrowserAutomation:
             password_input.send_keys(self.jira_password)
             password_input.send_keys(Keys.RETURN)
 
+        self.driver.refresh()
+        self.driver.close()
         # Switch back to the dashboard and start refreshing
         self.driver.switch_to.window(self.driver.window_handles[1])
 
